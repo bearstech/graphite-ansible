@@ -7,5 +7,28 @@
   apt: pkg=python-virtualenv
 - name: carbon dependencies
   apt: pkg=python-dev
-- name: Carbon
-  pip: name=carbon virtualenv=/opt/graphite version=0.9.10
+- name: git
+  apt: pkg=git
+- name: Pip up to date
+  pip: name=pip virtualenv=/opt/graphite version=1.4.1
+- name: carbon source
+  #command: wget -nc https://launchpad.net/graphite/0.9/{{ graphite.version }}/+download/carbon-{{ graphite.version }}.tar.gz chdir=/opt/graphite creates=/opt/graphite/carbon-{{ graphite.version }}.tar.gz
+  get_url: url=https://github.com/graphite-project/carbon/archive/{{ graphite.version }}.tar.gz dest=/opt/graphite/carbon-{{ graphite.version }}.tar.gz
+- name: unarchive source
+  command: tar -xvzf /opt/graphite/carbon-{{graphite.version}}.tar.gz chdir=/opt/graphite creates=/opt/graphite/carbon-{{ graphite.version }}
+- name: install carbon requirements
+  command: ./bin/pip install -r ./carbon-{{ graphite.version }}/requirements.txt chdir=/opt/graphite
+- name: install carbon
+  command: ./bin/pip install ./carbon-{{ graphite.version }}/ chdir=/opt/graphite
+- name: conf folder
+  file: state=directory path=/opt/graphite/conf
+- name: carbon.conf
+  template: src=carbon.conf.j2 dest=/opt/graphite/conf/carbon.conf owner=graphite
+- name: storage-schemas.conf
+  template: src=storage-schemas.conf.j2 dest=/opt/graphite/conf/storage-schemas.conf owner=graphite
+- name: init.d conf
+  copy: src=carbon dest=/etc/init.d/carbon mode=0744
+- name: init.d
+  command: update-rc.d carbon defaults
+- name: carbon is started
+  service: name=carbon state=started

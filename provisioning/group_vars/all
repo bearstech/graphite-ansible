@@ -1,2 +1,6 @@
 ---
-hello: world
+graphite:
+    version: 0.9.12
+carbon:
+    host: 0.0.0.0
+    ssl: no
