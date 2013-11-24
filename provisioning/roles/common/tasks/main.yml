@@ -1,6 +1,8 @@
 ---
 - name: Apt is not too old
   apt: update_cache=yes cache_valid_time=3600
+- name: Ansible dependency
+  apt: pkg=python-pycurl
 - name: Bearstech repo key
   get_url: url=http://deb.bearstech.com/bearstech-archive.gpg dest=/etc/apt/trusted.gpg.d/bearstech-archive.gpg
 - name: Bearstech repo
