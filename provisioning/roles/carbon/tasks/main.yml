@@ -1,18 +1,4 @@
 ---
-- name: Graphite path
-  file: state=directory path=/opt/graphite
-- name: Graphite user
-  user: name=graphite home=/opt/graphite system=yes
-- name: Virtualenv
-  apt: pkg=python-virtualenv
-- name: carbon dependencies
-  apt: pkg=python-dev
-- name: git
-  apt: pkg=git
-# Ok, I'm cheating, I just need a virtualenv
-- name: Pip up to date
-  pip: name=pip virtualenv=/opt/graphite version=1.4.1
-
 - name: carbon source
   get_url: url=https://github.com/graphite-project/carbon/archive/{{ graphite.version }}.tar.gz dest=/opt/graphite/carbon-{{ graphite.version }}.tar.gz
 - name: unarchive source
@@ -22,8 +8,6 @@
 - name: install carbon
   command: ./bin/pip install ./carbon-{{ graphite.version }}/ chdir=/opt/graphite
 
-- name: conf folder
-  file: state=directory path=/opt/graphite/conf
 - name: carbon.conf
   template: src=carbon.conf.j2 dest=/opt/graphite/conf/carbon.conf owner=graphite
 - name: storage-schemas.conf
