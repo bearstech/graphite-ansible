@@ -12,7 +12,13 @@
   command: /opt/graphite/bin/python manage.py syncdb chdir=/opt/graphite/webapp/graphite creates=/opt/graphite/storage/graphite.db
 - name: gunicorn
   pip: name=gunicorn virtualenv=/opt/graphite
+- name: graphite default
+  template: src=graphite.j2 dest=/etc/default/graphite
+  notify: restart graphite
 - name: graphite init
-  template: src=graphite.j2 dest=/etc/init.d/graphite mode=0755
+  copy: src=graphite dest=/etc/init.d/graphite mode=0744
+  notify: restart graphite
 - name: init.d
   command: update-rc.d graphite defaults
+- name: graphite service
+  service: name=graphite state=started

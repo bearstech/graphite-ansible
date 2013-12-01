@@ -1,0 +1,3 @@
+---
+- name: restart graphite
+  service: name=graphite state=restarted
