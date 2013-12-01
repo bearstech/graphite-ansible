@@ -2,6 +2,8 @@
 graphite:
     version: 0.9.12
     timezone: Europe/Paris
+    workers: 4
+    host: 0.0.0.0
 carbon:
     host: 0.0.0.0
     ssl: no

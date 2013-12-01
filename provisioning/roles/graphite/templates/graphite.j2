@@ -13,11 +13,11 @@
 
 PIDFILE=/opt/graphite/storage/graphite.pid
 DAEMON=/opt/graphite/bin/gunicorn_django
-HOST=0.0.0.0
+HOST={{ graphite.host }}
 PORT=8000
 USER=graphite
 HOME=/opt/graphite/webapp/graphite
-WORKERS=4
+WORKERS={{ graphite.workers }}
 
 case "$1" in
     start)
