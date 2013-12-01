@@ -15,6 +15,9 @@
 - name: graphite owns the db
   file: path=/opt/graphite/storage/graphite.db owner=graphite
 
+- name: graphite storage folder
+  file: state=directory path=/opt/graphite/storage owner=graphite recurse=yes
+
 - name: gunicorn
   pip: name=gunicorn virtualenv=/opt/graphite
 - name: graphite default
