@@ -4,6 +4,8 @@
   get_url: url=https://github.com/graphite-project/graphite-web/archive/{{ graphite.version }}.tar.gz dest=/opt/graphite/graphite-web-{{ graphite.version }}.tar.gz
 - name: unarchive source
   command: tar -xvzf graphite-web-{{ graphite.version }}.tar.gz chdir=/opt/graphite creates=/opt/graphite/graphite-web-{{ graphite.version }}
+- name: symlink webapp
+  command: ln -fs /opt/graphite/graphite-web-{{ graphite.version }}/webapp /opt/graphite/webapp
 - name: install graphite
   command: ./bin/pip install -r ./graphite-web-{{ graphite.version }}/requirements.txt chdir=/opt/graphite
 - name: graphite conf
