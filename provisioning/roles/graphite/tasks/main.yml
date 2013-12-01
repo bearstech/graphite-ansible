@@ -5,13 +5,14 @@
 - name: unarchive source
   command: tar -xvzf graphite-web-{{ graphite.version }}.tar.gz chdir=/opt/graphite creates=/opt/graphite/graphite-web-{{ graphite.version }}
 - name: symlink webapp
-  command: ln -fs /opt/graphite/graphite-web-{{ graphite.version }}/webapp /opt/graphite/webapp
+  command: ln -fs /opt/graphite/graphite-web-{{ graphite.version }}/webapp /opt/graphite/
 - name: install graphite
   command: ./bin/pip install -r ./graphite-web-{{ graphite.version }}/requirements.txt chdir=/opt/graphite
 - name: graphite conf
   template: src=local_settings.py.j2 dest=/opt/graphite/graphite-web-{{graphite.version}}/webapp/graphite/local_settings.py
 - name: default db
   command: /opt/graphite/bin/python manage.py syncdb chdir=/opt/graphite/webapp/graphite creates=/opt/graphite/storage/graphite.db
+
 - name: gunicorn
   pip: name=gunicorn virtualenv=/opt/graphite
 - name: graphite default
