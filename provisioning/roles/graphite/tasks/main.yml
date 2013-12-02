@@ -12,9 +12,9 @@
   template: src=local_settings.py.j2 dest=/opt/graphite/graphite-web-{{graphite.version}}/webapp/graphite/local_settings.py
 - name: default db
   command: /opt/graphite/bin/python manage.py syncdb --noinput chdir=/opt/graphite/webapp/graphite creates=/opt/graphite/storage/graphite.db
-- name: graphite owns the db
-  file: path=/opt/graphite/storage/graphite.db owner=graphite
 
+- name: graphite log folder
+  file: state=directory path=/opt/graphite/storage/log/webapp
 - name: graphite storage folder
   file: state=directory path=/opt/graphite/storage owner=graphite recurse=yes
 
