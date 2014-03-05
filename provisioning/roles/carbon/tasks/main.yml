@@ -10,6 +10,7 @@
 
 - name: carbon.conf
   template: src=carbon.conf.j2 dest=/opt/graphite/conf/carbon.conf owner=graphite
+  notify: restart carbon
 - name: storage-schemas.conf
   template: src=storage-schemas.conf.j2 dest=/opt/graphite/conf/storage-schemas.conf owner=graphite
 

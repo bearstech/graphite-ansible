@@ -9,6 +9,10 @@
 # Description:       Carbon interface for Whisper storage.
 ### END INIT INFO
 
-# Author: Mathieu Lecarme <mlecarme@bearstech.com> 
-
-cd /opt/graphite && /opt/graphite/bin/carbon-cache.py $1
+# Author: Mathieu Lecarme <mlecarme@bearstech.com>
+if $1 == 'restart' ; then
+    cd /opt/graphite && /opt/graphite/bin/carbon-cache.py stop
+    cd /opt/graphite && /opt/graphite/bin/carbon-cache.py start
+else
+    cd /opt/graphite && /opt/graphite/bin/carbon-cache.py $1
+fi

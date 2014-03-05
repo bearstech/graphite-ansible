@@ -1,0 +1,3 @@
+---
+- name: restart carbon
+  service: name=carbon state=restarted
