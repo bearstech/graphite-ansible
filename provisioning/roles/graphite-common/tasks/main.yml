@@ -1,14 +1,16 @@
 ---
+- name: Installing Debian packages
+  apt: pkg={{item}}
+  with_items:
+      - git
+      - python-virtualenv
+      - python-dev
+
 - name: Graphite path and is conf folder
   file: state=directory path=/opt/graphite/conf
 - name: Graphite user
   user: name=graphite home=/opt/graphite system=yes
-- name: Virtualenv
-  apt: pkg=python-virtualenv
-- name: carbon dependencies
-  apt: pkg=python-dev
-- name: git
-  apt: pkg=git
+
 # Ok, I'm cheating, I just need a virtualenv
 - name: Pip up to date
   pip: name=pip virtualenv=/opt/graphite version=1.4.1
